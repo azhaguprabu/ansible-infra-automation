@@ -1,0 +1,62 @@
+- name: Install Bind on Centos8
+  become_user: root
+  become_method: sudo 
+  hosts: bind_master
+
+  task:
+    - name: include vars
+      include_vars:
+        file: vars.yml
+
+    - name: install the packages
+      package:
+        name: {{ item }}
+        state: installed
+      with_items:
+        - bind
+        - bind-utils
+      
+    - name: main configuration file
+      template:
+        src: src/named.conf.j2
+        dest: /etc/named.conf
+        owner: root
+        group: named
+        mode: 0644
+      notify: restart bind
+
+    - name: domain configuration 
+      template:
+        src: src/named_users.conf.local.j2
+        dest: /etc/named.d/named_users.conf
+        owner: root
+        group: named
+        mode: 0644
+      notify: restart bind
+      with_dict: "{{ domains }}"
+
+    - name: forward zone for domains
+      template:
+        src: src/fwd-domain.conf.j2
+        dest: "/var/named/{{ item }}-fwd.zone"
+        owner: root
+        group: named
+        mode: 0644
+      notify: restart bind
+      with_items: "{{ domains.key }}"
+    
+    - name: reverse zone for domains
+      template:
+        src: src/rev-domian.conf.j2
+        dest: "/var/named/{{ item }}-rev.zone"
+        owner: root
+        group: named
+        mode: 0644
+      notify: restart bind
+      with_items: "{{ domains.key }}"
+
+  handlers:
+    - name: restart bind
+      service:
+        name: named
+        state: restarted
