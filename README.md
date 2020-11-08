@@ -158,8 +158,8 @@ interface {{ intf.name }}
 ```
 
 ### Macros passing argument
-> varargs  -- list
-> kwargs -- dictinary kwargs.item()
+* varargs  -- list
+* kwargs -- dictinary kwargs.item()
 
 ```jinja2
 {% macro set_access_vlan() -%}
