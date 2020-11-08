@@ -125,20 +125,20 @@ We see that z is not True. z: {{ z }}
 
 ### Template filtering
 
-> capitalize
-> join(" ")
-> center
-> default("10")
-> dictsort(by=value, reverse=true)
-> float 
-> groupby(attribute='vlan')
-> int
-> map('lower') | join(", ")
-> {% for as_no in as_numbers| reject('gt', 64495) %}
-> {% for intf in interfaces | rejectattr('mode', 'eq', 'switched') %}
-> {% for as_no in as_numbers| select('gt', 64495) %}
-> {{ interfaces | tojson(indent=2) }}
-> unique 
+1. capitalize
+1. join(" ")
+1. center
+1. default("10")
+1. dictsort(by=value, reverse=true)
+1. float 
+1. groupby(attribute='vlan')
+1. int
+1. map('lower') | join(", ")
+1. {% for as_no in as_numbers| reject('gt', 64495) %}
+1. {% for intf in interfaces | rejectattr('mode', 'eq', 'switched') %}
+1. {% for as_no in as_numbers| select('gt', 64495) %}
+1. {{ interfaces | tojson(indent=2) }}
+1. unique 
 
 ### Macros function in Jinja2
 ```jinja2
