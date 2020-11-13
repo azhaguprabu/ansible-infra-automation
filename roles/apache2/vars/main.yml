@@ -1,0 +1,11 @@
+---
+ServerName: www.example.com
+VirtualHost:
+  example.com:
+    ServerName: www.example.com
+    DocumentRoot: /home/exmaple.com
+    Logs: yes
+  crackers.org:
+    ServerName: www.crackers.org
+    DocumentRoot: /home/crackers.org
+    Logs: yes
