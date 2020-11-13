@@ -1,0 +1,14 @@
+---
+- name: install packages
+  package: 
+    name: apache2
+    state: installed
+
+- name: httpd main configuration
+  template:
+    src: apache2.conf.j2
+    dest: /etc/apache2/conf/apache.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart apache2

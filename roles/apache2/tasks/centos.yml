@@ -1,0 +1,24 @@
+---
+- name: install packages
+  package: 
+    name: httpd
+    state: installed
+
+- name: httpd main configuration
+  template:
+    src: httpd.conf.j2
+    dest: /etc/httpd/conf/httpd.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart httpd
+
+- name: httpd VirtualHost configuration
+  template:
+    src: virtualhost.conf.j2
+    dest: "/etc/httpd/conf.d/{{ item.name }}.conf"
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart httpd
+  with_items: virtualhost
