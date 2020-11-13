@@ -1,7 +1,6 @@
 ---
 - name: include vars 
-  include_vars:
-    file: "{{ ansible_distribution }}.yml"
+  include_vars: "{{ ansible_distribution }}.yml"
 
 - name: install packages
   package: 
@@ -14,7 +13,7 @@
     owner: root
     group: root
     mode: 0644
-  notify: " restart {{ ServiceName }}"
+  notify: "restart {{ ServiceName }}"
 
 - name: apache VirtualHost configuration
   template:
