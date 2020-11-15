@@ -1,24 +1,24 @@
 ---
-- name: include vars 
+- name: Include Vars
   include_vars: "{{ ansible_distribution }}.yml"
 
-- name: install packages
-  package: 
+- name: Install Packages
+  package:
     name: "{{ PackageName }}"
 
-- name: apache main configuration
+- name: Apache main Configuration
   template:
     src: httpd.conf.j2
-    dest: "{{ DocumentRoot }}/conf/httpd.conf"
+    dest: "{{ DocumentRoot }}/conf/{{ ServiceName }}.conf"
     owner: root
     group: root
     mode: 0644
   notify: "restart {{ ServiceName }}"
 
-- name: apache VirtualHost configuration
+- name: Apache VirtualHost Configuration
   template:
     src: virtualhost.conf.j2
-    dest: "{{ DocumentRoot }}/conf.d/{{ item.name }}.conf"
+    dest: "{{ DocumentRoot }}/conf.d/virtualhosts.conf"
     owner: root
     group: root
     mode: 0644

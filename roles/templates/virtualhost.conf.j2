@@ -1,0 +1,10 @@
+
+NameVirtualHost *:80
+{% for iname, idata from VirtualHost.item() -%}
+
+<VirtualHost *:80>
+    ServerName  {{ idata.ServerName }}
+    DocumentRoot    {{ idata.DocumentRoot }}
+</VirtualHost>
+
+{% endfor -%}
